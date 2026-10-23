@@ -1,0 +1,120 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+:root {
+  --bg: #f6f6f3;
+  --surface: #ffffff;
+  --surface-2: #ecece7;
+  --fg: #1b1c1e;
+  --muted: #6b6d72;
+  --line: #e2e2dc;
+  --accent: #0f7a5c;
+  --accent-fg: #ffffff;
+  --accent-soft: #dff1e9;
+  --danger: #c2362b;
+  --danger-soft: #fbe9e7;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #111214;
+  --surface: #1a1b1e;
+  --surface-2: #26272b;
+  --fg: #ececec;
+  --muted: #9a9ca2;
+  --line: #2d2e33;
+  --accent: #43c495;
+  --accent-fg: #08170f;
+  --accent-soft: #183427;
+  --danger: #ef6f64;
+  --danger-soft: #3a1e1c;
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer components {
+  .field {
+    @apply block w-full min-w-0 rounded-xl border border-line bg-surface px-3.5 py-2.5 text-base text-fg outline-none placeholder:text-muted/70 focus:border-accent focus:ring-2 focus:ring-accent/25;
+    min-height: 48px;
+  }
+  select.field {
+    @apply appearance-none pr-10;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+  }
+}
+
+/* While typing into the add-item bar on a phone, give the keyboard the tab bar's space. */
+@media (pointer: coarse) {
+  body:has([data-hide-nav]:focus) .tabbar {
+    display: none;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+.animate-sheet {
+  animation: sheet-in 0.2s ease-out;
+}
+.animate-fade {
+  animation: fade-in 0.15s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-sheet,
+  .animate-fade {
+    animation: none;
+  }
+}
